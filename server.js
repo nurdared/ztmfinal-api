@@ -19,16 +19,17 @@ const db = knex({
 })
 
 const app = express();
+const PORT = process.env.PORT;
 
 app.use(express.json())
 app.use(cors())
 
 
-app.listen(3000, () => {
-  console.log("app is running on port 3000");
+app.listen(PORT || 3000, () => {
+  console.log(`app is running on port ${PORT}`);
 })
 
-app.get('/', (req, res) => res.json('It is working'));
+app.get('/', (req, res) => res.send('It is working'));
 app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt))
 app.post('/signin', signin.handleSignIn(db, bcrypt));
 app.get('/profile/:id', profile.handleProfileGet(db));
